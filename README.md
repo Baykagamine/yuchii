@@ -5,7 +5,7 @@ Installation in termux you can download termux in playstore:
 The first you should do the following in termux:
 ```sh
 $ pkg install git -y
-$ pkg install python -y
+$ pkg install python2 -y
 ```
 follow these steps:
 ```sh
