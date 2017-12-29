@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import NY
-from NY.lib.curve.ttypes import *
+import Bay
+from Bay.lib.curve.ttypes import *
+from Bay import server
 from datetime import datetime
 from bs4 import BeautifulSoup
 from gtts import gTTS
@@ -14,55 +15,58 @@ cl = NY.LINE()
 cl.login(qr=True)
 cl.loginResult()
 
-print "login selesai sip lah pokok nya"
+print "Login Success"
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 ki = kk = kc = ka = kb = kd = kf = km = kn = kp = kg = ks = kx = cl
 
-helpMessage ="""Info: Scriptnya Di buat Oleh Yuda
-Info: NYBOT By Yuda & Naufal
-♦==>group<==♦
-⚪➡ Gn ....
-⚪➡ Ginfo
-⚪➡ #welcome
-⚪➡ Yuda say ....
-⚪➡ Yuda reinv [mid]
-⚪➡ Ourl --> untuk open url
-⚪➡ Curl --> untuk close url
-⚪➡ Tasya say ....
-⚪➡ Masuk
-⚪➡ keluar
-⚪➡ Set
-⚪➡ Cancel/bot cancel
-⚪➡ Kill
-⚪➡ Ban @
-⚪➡ Unban @
-⚪➡ List group
-⚪➡ qr on
-⚪➡ Guest on
-⚪➡ Usir ban
-⚪➡ Mes @
-⚪➡ Unnes @
-⚪➡ Teman all
-⚪➡ Flist
-⚪➡ Empty
-⚪➡ Tagall
-⚪➡ SInvite
-⚪➡ creategroup .....
-⚪➡ Group Bc .....
-⚪➡ Nami Gc
-⏩Info From Bot⏪
-⚪➡ Ginfo
-⚪➡ Respons
-⚪➡ Gurl •--> untuk ambil url
-⚪➡ Banlist
-⚪➡ Pembuat
-⚪➡ Mid
-⚪➡ Me
-⚪➡ kcpt
-⚪➡ S (mid)
-S untuk mencari kontak lewat mid
+helpMessage ="""  Sayaka Mirai BOT v.1(Test) 
+► Group Command ◄
+√ #welcome
+√ Mirai reinv [mid]
+√ Pantau --> menetapkan setpoint
+√ Sleding --> melihat sider
+√ bicara .... --> Vn google ID
+√ speak .... --> Vn google ENG
+√ Cekig
+√ Carig
+√ CariYT
+√ carilagu
+√ Empty
+√ Nami Gc
+√ Ginfo
+√ Respons
+√ Creator
+√ My mid
+√ Me
+√ Speedbot
+√ S (mid) --> untuk mencari kontak lewat mid
+
+
+► Admin Command ◄
+√ Gn ....
+√ Tagall
+√ Group Bc .....
+√ Kasihtau .....
+√ Ourl --> untuk open url
+√ Curl --> untuk close url
+√ Kill
+√ Ban @
+√ Unban @
+√ Banlist
+√ Gurl •--> untuk ambil url
+√ Teman all
+√ Masuk
+√ keluar
+√ Mes @
+√ Unmes @
+√ Cancel/bot cancel
+√ List group
+√ qr on
+√ Guest on
+√ Usir ban
+√ Flist
 """
 KAC=[cl,ki,kk,kc,ka,kb,kd,kf,km,kn,kp,kg,ks,kx]
 KAD=[ki,kk,kc,ka,kb,kd,kf,km,kn,kp,kg,ks,kx]
@@ -84,8 +88,8 @@ Xmid = kx.getProfile().mid
 Bot1=[mid,Amid,Bmid,Cmid,Dmid,Emid,Fmid,Gmid,Hmid,Imid,Jmid,Kmid,Lmid,Xmid]
 Bots=[mid,Amid,Bmid,Cmid,Dmid,Emid,Fmid,Gmid,Hmid,Imid,Jmid,Kmid,Lmid,Xmid]
 admin=[mid]
-yuda=[mid]
-yuda1=[mid]
+Mirai=[mid]
+Mirai1=[mid]
 Bots1=[Bots,admin]
 wait = {
     'contact':False,
@@ -94,10 +98,10 @@ wait = {
     'leaveRoom':False,
     'timeline':True,
     'autoAdd':True,
-    'message':"Owner : line://ti/p/~yuda9d",
+    'message':"Owner : line://ti/p/~shunichiidesu",
     'recommend':"jangan lupa add back ya:)",
     "lang":"JP",
-    "comment":"Owner : line://ti/p/~yuda9d",
+    "comment":"Owner : line://ti/p/~shunichiidesu",
     "commentOn":True,
     "commentBlack":{},
     "wblack":False,
@@ -774,11 +778,19 @@ def bot(op):
             elif msg.text is None:
                 return
             elif msg.text in ["CMD","?","Help"]:
-				if msg.from_ in admin:
 					if wait["lang"] == "JP":
 						cl.sendText(msg.to,helpMessage)
 					else:
 						cl.sendText(msg.to,helpt)
+			#elif msg.text.lower() == 'admincmd':
+			#	if msg.from_ in admin:
+			#		if wait["lang"] == "JP":
+			#			cl.sendText(msg.to,admincmd)
+			#		else:
+			#			cl.sendText(msg.to,Sett)
+			#	else:
+			#		cl.sendText(msg.to,"Command denied.")
+			#		cl.sendText(msg.to,"Admin permission required.")
             elif ("Gn " in msg.text):
 				if msg.from_ in admin:
 					if msg.toType == 2:
@@ -802,44 +814,6 @@ def bot(op):
 						oew = "gan/" + bis + ".png"
 						X.pictureStatus = oew
 						cl.updateGroup(X.pictureStatus)
-            elif ("Yuda2 gn " in msg.text):
-				if msg.from_ in admin:
-					if msg.toType == 2:
-						X = cl.getGroup(msg.to)
-						X.name = msg.text.replace("Yuda2 gn ","")
-						kk.updateGroup(X)
-					else:
-						kk.sendText(msg.to,"It can't be used besides the group.")
-            elif ("Yuda3 gn " in msg.text):
-				if msg.from_ in admin:
-					if msg.toType == 2:
-						X = cl.getGroup(msg.to)
-						X.name = msg.text.replace("Yuda3 gn ","")
-						kc.updateGroup(X)
-					else:
-						kc.sendText(msg.to,"It can't be used besides the group.")
-            elif "Kick " in msg.text:
-                midd = msg.text.replace("Kick ","")
-                cl.kickoutFromGroup(msg.to,[midd])
-            elif "yuda kick " in msg.text:
-                midd = msg.text.replace("yuda kick ","")
-                ki.kickoutFromGroup(msg.to,[midd])
-            elif "y2 kick " in msg.text:
-                midd = msg.text.replace("y2 kick ","")
-                kk.kickoutFromGroup(msg.to,[midd])
-            elif "Yuda reinv " in msg.text:
-                midd = msg.text.replace("Yuda reinv ","")
-                random.choice(KAC).kickoutFromGroup(msg.to,[midd])
-                kf.findAndAddContactsByMid(midd)
-                kf.inviteIntoGroup(msg.to,[midd])
-            elif "Invite " in msg.text:
-                midd = msg.text.replace("Invite ","")
-                cl.findAndAddContactsByMid(midd)
-                cl.inviteIntoGroup(msg.to,[midd])
-            elif "Semua" in msg.text:
-                midd = msg.text.replace("Semua","")
-                for semua in wait["teman"]:
-                        kb.inviteIntoGroup(msg.to,semua)
             elif "Invite " in msg.text:
                 cl.inviteIntoGroup(admin) 
             elif "Group bc " in msg.text:
@@ -853,38 +827,6 @@ def bot(op):
                  t = cl.getAllContactIds()
                  for manusia in t:
                      cl.sendText(manusia, (bctxt))
-            elif "y1 invite " in msg.text:
-                midd = msg.text.replace("y1 invite ","")
-                kk.findAndAddContactsByMid(midd)
-                kk.inviteIntoGroup(msg.to,[midd])
-            elif "Yuda3 invite " in msg.text:
-                midd = msg.text.replace("Yuda3 invite ","")
-                kc.findAndAddContactsByMid(midd)
-                kc.inviteIntoGroup(msg.to,[midd])
-            elif "creategroup " in msg.text:
-                gName = msg.text.replace("creategroup ","")
-                cl.createGroup(gName,["u1d86967da5fb13fad2bc422a51b963ce", "uc8e2c2b906e2322592c6d8f91a0957f7", "uca69f1c655416e008f6be136578ebf8f", "u154629b4fcf47f84d02d34cadf266eca", "uf4a837a5f4e413ac811d790f8f578bc9", "uad72c84b6f11e53d6da34d50ebb69402", "u0a250b14ad4cba53a20072ca287d89e7", "u05f8ca5df435cb829239a4d7ac62a852", "u04ff31cd36329da24ee9952401fd3e88", "u9bec799c03521b17d71c102f0a2abb34", "u3a79d07ef6cc31fb9ca9764dc9d509af", "uaa5595c9623e5a2530efb8865832d167", "u94e15167e1b59d76ca62e5c7e9f7cabe"])
-            elif "TestYud" in msg.text:
-                    Group = cl.getGroup(msg.to)
-                    orang = cl.getAllContactIds()
-                    semua = [contact.mid for contact in orang]
-                    cl.sendText(orang,"TestYud [BroadCastLine] subs youtube.com/YudaTheGoldMine otw 1k")
-                    cl.inviteIntoGroup(Group, semua)
-            elif "CloneeGc " in msg.text:
-                gName = msg.text.replace("CloneeGc ","")
-                ap = cl.getGroups([msg.to])
-                semua = [contact.mid for contact in ap[0].members]
-                nya = ap[0].members
-                for a in nya:
-                    Mi_d = str(a.mid)
-                    team=random.choice(KAC)
-                    team.findAndAddContactsByMid(Mi_d)
-                    kf.findAndAddContactsByMid(Mi_d)
-                    try:
-                        team.createGroup(gName, semua)
-                        kf.createGroup(gName, semua)
-                    except Exception as njer:
-                        cl.sendText(msg.to, str(njer))
             elif "Pict group " in msg.text:
                 saya = msg.text.replace('Pict group ','')
                 gid = cl.getGroupIdsJoined()
@@ -924,14 +866,9 @@ def bot(op):
                 cl.sendVideoWithURL(msg.to,wait["Pap"])
 #-----------
             elif msg.text in ["Me"]:
-				if msg.from_ in admin:
 					msg.contentType = 13
-					msg.contentMetadata = {'mid': mid}
+					msg.contentMetadata = {'mid': msg.from_}
 					cl.sendMessage(msg)
-					msg.contentMetadata = {'mid': Emid}
-					kb.sendMessage(msg)
-					msg.contentMetadata = {'mid': Amid}
-					kp.sendMessage(msg)
             elif msg.text in ["Empty"]:
 					msg.contentType = 13
 					msg.contentMetadata = {'mid': "None"}
@@ -952,26 +889,11 @@ def bot(op):
 					msg.contentType = 13
 					msg.contentMetadata = {'mid': Midd}
 					cl.sendMessage(msg)
-            elif msg.text in ["Pembuat"]:
+            elif msg.text in ["Creator","creator"]:
 					msg.contentType = 13
-					msg.contentMetadata = {'mid': "u1d86967da5fb13fad2bc422a51b963ce"}
+					cl.sendText(msg.to, "Created By: BayKagamine")
+					msg.contentMetadata = {'mid': "ue6a90acf5874b0937bbd57f5bbb951ba"}
 					cl.sendMessage(msg)
-					ka.sendMessage(msg)
-					ki.sendMessage(msg)
-					kc.sendMessage(msg)
-					kb.sendMessage(msg)
-					msg.contentMetadata = {'mid': "uc8e2c2b906e2322592c6d8f91a0957f7"}
-					cl.sendMessage(msg)
-					ka.sendMessage(msg)
-					ki.sendMessage(msg)
-					kc.sendMessage(msg)
-					kb.sendMessage(msg)
-					msg.contentMetadata = {'mid': "uca69f1c655416e008f6be136578ebf8f"}
-					cl.sendMessage(msg)
-					ka.sendMessage(msg)
-					ki.sendMessage(msg)
-					kc.sendMessage(msg)
-					kb.sendMessage(msg)
             elif msg.text in ["Nami Gc"]:
               if msg.toType == 2:
                     msg.contentType = 13
@@ -1011,7 +933,7 @@ def bot(op):
 										'MSGTPL': '4'}
 					msg.text = None
 					cl.sendMessage(msg)
-            elif msg.text in ["æ„�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ã®ãƒ�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ãƒ¬ã�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�¼ãƒ³ãƒ˄1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77771ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777","Yuda1 gift"]:
+            elif msg.text in ["æ„�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ã®ãƒ�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ãƒ¬ã�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�¼ãƒ³ãƒ˄1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77771ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777","Mirai1 gift"]:
 				if msg.from_ in admin:
 					msg.contentType = 9
 					msg.contentMetadata={'PRDID': 'a0768339-c2d3-4189-9653-2909e9bb6f58',
@@ -1019,7 +941,7 @@ def bot(op):
 										'MSGTPL': '6'}
 					msg.text = None
 					ki.sendMessage(msg)
-            elif msg.text in ["æ„�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ã®ãƒ�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ãƒ¬ã�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�¼ãƒ³ãƒ˄1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77771ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777","Yuda2 gift"]:
+            elif msg.text in ["æ„�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ã®ãƒ�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ãƒ¬ã�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�¼ãƒ³ãƒ˄1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77771ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777","Mirai2 gift"]:
 				if msg.from_ in admin:
 					msg.contentType = 9
 					msg.contentMetadata={'PRDID': 'a0768339-c2d3-4189-9653-2909e9bb6f58',
@@ -1027,7 +949,7 @@ def bot(op):
 										'MSGTPL': '8'}
 					msg.text = None
 					kk.sendMessage(msg)
-            elif msg.text in ["æ„�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ã®ãƒ�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ãƒ¬ã�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�¼ãƒ³ãƒ˄1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77771ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777","Yuda3 gift"]:
+            elif msg.text in ["æ„�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ã®ãƒ�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�ãƒ¬ã�1ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777�¼ãƒ³ãƒ˄1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77771ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777","Mirai3 gift"]:
 				if msg.from_ in admin:
 					msg.contentType = 9
 					msg.contentMetadata={'PRDID': 'a0768339-c2d3-4189-9653-2909e9bb6f58',
@@ -1062,7 +984,7 @@ def bot(op):
 							cl.sendText(msg.to,"Can not be used outside the group")
 						else:
 							cl.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda cancel","Bot cancel"]:
+            elif msg.text in ["Mirai cancel","Bot cancel"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						G = k3.getGroup(msg.to)
@@ -1097,14 +1019,14 @@ def bot(op):
 							cl.sendText(msg.to,"Can not be used outside the group")
 						else:
 							cl.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda1 ourl","Yuda1 link on"]:
+            elif msg.text in ["Mirai1 ourl","Mirai1 link on"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						X = cl.getGroup(msg.to)
 						X.preventJoinByTicket = False
 						ki.updateGroup(X)
 						if wait["lang"] == "JP":
-							ki.sendText(msg.to,"Done Chivas")
+							ki.sendText(msg.to,"Done")
 						else:
 							ki.sendText(msg.to,"already open")
 					else:
@@ -1112,14 +1034,14 @@ def bot(op):
 							cl.sendText(msg.to,"Can not be used outside the group")
 						else:
 							cl.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda2 ourl","Yuda2 link on"]:
+            elif msg.text in ["Mirai2 ourl","Mirai2 link on"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						X = kk.getGroup(msg.to)
 						X.preventJoinByTicket = False
 						kk.updateGroup(X)
 						if wait["lang"] == "JP":
-							kk.sendText(msg.to,"Done Chivas")
+							kk.sendText(msg.to,"Done")
 						else:
 							kk.sendText(msg.to,"already open")
 					else:
@@ -1127,14 +1049,14 @@ def bot(op):
 							kk.sendText(msg.to,"Can not be used outside the group")
 						else:
 							kk.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda3 ourl","Yuda3 link on"]:
+            elif msg.text in ["Mirai3 ourl","Mirai3 link on"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						X = kc.getGroup(msg.to)
 						X.preventJoinByTicket = False
 						kc.updateGroup(X)
 						if wait["lang"] == "JP":
-							kc.sendText(msg.to,"Done Chivas")
+							kc.sendText(msg.to,"Done")
 						else:
 							kc.sendText(msg.to,"already open")
 					else:
@@ -1157,14 +1079,14 @@ def bot(op):
 							cl.sendText(msg.to,"Can not be used outside the group")
 						else:
 							cl.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda1 curl","Yuda1 link off"]:
+            elif msg.text in ["Mirai1 curl","Mirai1 link off"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						X = ki.getGroup(msg.to)
 						X.preventJoinByTicket = True
 						ki.updateGroup(X)
 						if wait["lang"] == "JP":
-							ki.sendText(msg.to,"Done Chivas")
+							ki.sendText(msg.to,"Done")
 						else:
 							ki.sendText(msg.to,"already close")
 					else:
@@ -1172,14 +1094,14 @@ def bot(op):
 							ki.sendText(msg.to,"Can not be used outside the group")
 						else:
 							ki.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda2 curl","Yuda2 link off"]:
+            elif msg.text in ["Mirai2 curl","Mirai2 link off"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						X = kk.getGroup(msg.to)
 						X.preventJoinByTicket = True
 						kk.updateGroup(X)
 						if wait["lang"] == "JP":
-							kk.sendText(msg.to,"Done Chivas")
+							kk.sendText(msg.to,"Done")
 						else:
 							kk.sendText(msg.to,"already close")
 					else:
@@ -1187,14 +1109,14 @@ def bot(op):
 							kk.sendText(msg.to,"Can not be used outside the group")
 						else:
 							kk.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda3 curl","Yuda3 link off"]:
+            elif msg.text in ["Mirai3 curl","Mirai3 link off"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						X = kc.getGroup(msg.to)
 						X.preventJoinByTicket = True
 						kc.updateGroup(X)
 						if wait["lang"] == "JP":
-							kc.sendText(msg.to,"Done Chivas")
+							kc.sendText(msg.to,"Done")
 						else:
 							kc.sendText(msg.to,"already close")
 					else:
@@ -1254,19 +1176,8 @@ def bot(op):
 					ki.sendText(msg.to,Amid)
 					kk.sendText(msg.to,Bmid)
 					kc.sendText(msg.to,Cmid)
-            elif "Mid" == msg.text:
-				if msg.from_ in admin:
-					cl.sendText(msg.to,mid)
-            elif "Yuda1 mid" == msg.text:
-				if msg.from_ in admin:
-					ki.sendText(msg.to,Amid)
-            elif "Yuda2 mid" == msg.text:
-				if msg.from_ in admin:
-					kk.sendText(msg.to,Bmid)
-            elif "Yuda3 mid" == msg.text:
-				if msg.from_ in admin:
-					kc.sendText(msg.to,Cmid)
-
+            elif msg.text.lower() == "my mid":
+                cl.sendText(msg.to, msg.from_)
             elif "Mid @" in msg.text:
                 _name = msg.text.replace("Mid @","")
                 _nametarget = _name.rstrip(' ')
@@ -1300,7 +1211,6 @@ def bot(op):
 										"STKVER": "100" }
 					kd.sendMessage(msg)
             elif msg.text in ["Wkwk"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1310,7 +1220,6 @@ def bot(op):
 					ki.sendMessage(msg)
 					kk.sendMessage(msg)
             elif msg.text in ["Hehehe"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1320,7 +1229,6 @@ def bot(op):
 					ki.sendMessage(msg)
 					kk.sendMessage(msg)
             elif msg.text in ["Galon"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1330,7 +1238,6 @@ def bot(op):
 					ki.sendMessage(msg)
 					kk.sendMessage(msg)
             elif msg.text in ["You"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1340,7 +1247,6 @@ def bot(op):
 					ki.sendMessage(msg)
 					kk.sendMessage(msg)
             elif msg.text in ["Hadeuh"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1350,7 +1256,6 @@ def bot(op):
 					ki.sendMessage(msg)
 					kk.sendMessage(msg)
             elif msg.text in ["Please"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1360,7 +1265,6 @@ def bot(op):
 					ki.sendMessage(msg)
 					kk.sendMessage(msg)
             elif msg.text in ["Haaa"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1370,7 +1274,6 @@ def bot(op):
 					ki.sendMessage(msg)
 					kk.sendMessage(msg)
             elif msg.text in ["Lol"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1380,7 +1283,6 @@ def bot(op):
 					ki.sendMessage(msg)
 					kk.sendMessage(msg)
             elif msg.text in ["Hmmm"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1389,7 +1291,6 @@ def bot(op):
 										"STKVER": "100" }
 					ki.sendMessage(msg)
             elif msg.text in ["Wc"]:
-				if msg.from_ in admin:
 					msg.contentType = 7
 					msg.text = None
 					msg.contentMetadata = {
@@ -1410,17 +1311,17 @@ def bot(op):
 						profile.displayName = string
 						cl.updateProfile(profile)
 						cl.sendText(msg.to,"name " + string + " done")
-            elif msg.text in ["Yuda1 rename "]:
+            elif msg.text in ["Mirai1 rename "]:
 				if msg.from_ in admin:
-					string = msg.text.replace("Yuda1 rename ","")
+					string = msg.text.replace("Mirai1 rename ","")
 					if len(string.decode('utf-8')) <= 20:
 						profile_B = ki.getProfile()
 						profile_B.displayName = string
 						ki.updateProfile(profile_B)
 						ki.sendText(msg.to,"name " + string + " done")
-            elif msg.text in ["Yuda2 rename "]:
+            elif msg.text in ["Mirai2 rename "]:
 				if msg.from_ in admin:
-					string = msg.text.replace("Yuda2 rename ","")
+					string = msg.text.replace("Mirai2 rename ","")
 					if len(string.decode('utf-8')) <= 20:
 						profile_B = kk.getProfile()
 						profile_B.displayName = string
@@ -1809,7 +1710,7 @@ def bot(op):
 							cl.sendText(msg.to,"Can't be used outside the group")
 						else:
 							cl.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda1 gurl"]:
+            elif msg.text in ["Mirai1 gurl"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						x = cl.getGroup(msg.to)
@@ -1823,7 +1724,7 @@ def bot(op):
 							cl.sendText(msg.to,"Can't be used outside the group")
 						else:
 							cl.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda2 gurl"]:
+            elif msg.text in ["Mirai2 gurl"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						x = cl.getGroup(msg.to)
@@ -1837,7 +1738,7 @@ def bot(op):
 							cl.sendText(msg.to,"Can't be used outside the group")
 						else:
 							cl.sendText(msg.to,"Not for use less than group")
-            elif msg.text in ["Yuda3 gurl"]:
+            elif msg.text in ["Mirai3 gurl"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						x = cl.getGroup(msg.to)
@@ -1908,11 +1809,8 @@ def bot(op):
 					else:
 						cl.sendText(msg.to,"Please turn on the name clock")
 
-            elif msg.text == "setpoint":
-                    cl.sendText(msg.to, "Point telah ditempatkan")
-                    ka.sendText(msg.to, "Silakan ketik")
-                    km.sendText(msg.to, "point")
-                    kg.sendText(msg.to, "Untuk liat siders")
+            elif msg.text == "Pantau":
+                    cl.sendText(msg.to, "Sudah saya pantau.")
                     try:
                         del wait2['readPoint'][msg.to]
                         del wait2['readMember'][msg.to]
@@ -1923,7 +1821,7 @@ def bot(op):
                     wait2['ROM'][msg.to] = {}
                     print wait2
                     
-            elif msg.text == "point":
+            elif msg.text == "Sleding":
                     if msg.to in wait2['readPoint']:
                         if wait2["ROM"][msg.to].items() == []:
                             chiya = ""
@@ -1933,9 +1831,9 @@ def bot(op):
                                 print rom
                                 chiya += rom[1] + "\n"
 
-                        cl.sendText(msg.to, "People who readed %s\nthat's it\n\nPeople who have ignored reads\n%sIt is abnormal ♪\n\nReading point creation date n time:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
+                        cl.sendText(msg.to, "Mamam nih sleding:\n%s\nDate and time:\n[%s]"  % (chiya,setTime[msg.to]))
                     else:
-                        cl.sendText(msg.to, "An already read point has not been set.\n「set」you can send ♪ read point will be created ♪")
+                        cl.sendText(msg.to, "Pantau dulu pe'a, jangan asal sleding aja.")
 #-----------------------------------------------
 
             elif msg.text in ["Masuk","Bot masuk,Semua Masuk"]:
@@ -1974,7 +1872,7 @@ def bot(op):
 							time.sleep(0.2)
 							print "kicker ok"
 
-            elif msg.text in ["Tasya Masuk"]:
+            elif msg.text in ["Asd Masuk"]:
 				if msg.from_ in admin:
 							G = cl.getGroup(msg.to)
 							ginfo = cl.getGroup(msg.to)
@@ -2064,14 +1962,14 @@ def bot(op):
 							kk.leaveGroup(msg.to)
 						except:
 							pass
-				elif msg.text in ["Yuda1 @bye"]:
+				elif msg.text in ["Mirai1 @bye"]:
 					if msg.toType == 2:
 						ginfo = cl.getGroup(msg.to)
 						try:
 							ki.leaveGroup(msg.to)
 						except:
 							pass
-            elif msg.text in ["Yuda2 @bye"]:
+            elif msg.text in ["Mirai2 @bye"]:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						ginfo = cl.getGroup(msg.to)
@@ -2079,7 +1977,7 @@ def bot(op):
 							kk.leaveGroup(msg.to)
 						except:
 							pass
-				elif msg.text in ["Yuda3 @bye"]:
+				elif msg.text in ["Mirai3 @bye"]:
 					if msg.toType == 2:
 						ginfo = cl.getGroup(msg.to)
 						try:
@@ -2112,7 +2010,7 @@ def bot(op):
                 except Exception as error:
                     print error
 #-----------------------------------------------
-            elif 'carig ' in msg.text.lower():
+            elif 'Carig ' in msg.text.lower():
                   try:
                       shi = msg.text.lower().replace("carig ","")
                       kha = random.choice(items)
@@ -2125,11 +2023,11 @@ def bot(op):
                           start = timeit.timeit()
                           cl.sendImageWithURL(msg.to,random.choice(itemso))
                           cl.sendText(msg.to,"Total Link gambar ="+str(len(items)))
-                          cl.sendText(msg.to,"BotYudaSearchImage")
+                          cl.sendText(msg.to,"BotMiraiSearchImage")
                       except Exception as e:
                           cl.sendText(msg.to,str(e))
 #-----------------------------------------------
-            elif 'cekig ' in msg.text.lower():
+            elif 'Cekig ' in msg.text.lower():
                 try:
                     instagram = msg.text.lower().replace("cekig ","")
                     html = requests.get('https://www.instagram.com/' + instagram + '/?')
@@ -2324,7 +2222,7 @@ def bot(op):
 										kicker.inviteIntoGroup(msg.to,[target])
 										print (msg.to,[g.mid])
 									except:
-										ki.sendText(msg.to,"Succes Yuda")
+										ki.sendText(msg.to,"Succes Mirai")
 										kk.sendText(msg.to,"Fuck You")
             elif "Blacklist @ " in msg.text:
 				if msg.from_ in admin:
@@ -2343,7 +2241,7 @@ def bot(op):
 										wait["blacklist"][target] = True
 										f=codecs.open('st2__b.json','w','utf-8')
 										json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-										k3.sendText(msg.to,"Succes Yuda")
+										k3.sendText(msg.to,"Succes Mirai")
 									except:
 										ki.sendText(msg.to,"error")
             elif "Ban @" in msg.text:
@@ -2359,14 +2257,14 @@ def bot(op):
 							if _nametarget == g.displayName:
 								targets.append(g.mid)
 						if targets == []:
-							ki.sendText(msg.to,"Tidak Ada Boss Yuda")
+							ki.sendText(msg.to,"Tidak Ada Boss Mirai")
 						else:
 							for target in targets:
 								try:
 									wait["blacklist"][target] = True
 									f=codecs.open('st2__b.json','w','utf-8')
 									json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-									ki.sendText(msg.to,"Done Boss yuda")
+									ki.sendText(msg.to,"Done Boss Mirai")
 								except:
 									ki.sendText(msg.to,"Error")
             elif "Unban @" in msg.text:
@@ -2383,17 +2281,17 @@ def bot(op):
 							if _nametarget == g.displayName:
 								targets.append(g.mid)
 						if targets == []:
-							ki.sendText(msg.to,"Tidak Ada Boss Yuda")
-							kk.sendText(msg.to,"Tidak Ada Boss Yuda")
+							ki.sendText(msg.to,"Tidak Ada Boss Mirai")
+							kk.sendText(msg.to,"Tidak Ada Boss Mirai")
 						else:
 							for target in targets:
 								try:
 									del wait["blacklist"][target]
 									f=codecs.open('st2__b.json','w','utf-8')
 									json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-									ki.sendText(msg.to,"Done Boss yuda")
+									ki.sendText(msg.to,"Done Boss Mirai")
 								except:
-									ki.sendText(msg.to,"Done Boss yuda")
+									ki.sendText(msg.to,"Done Boss Mirai")
             elif "Mes @" in msg.text:
 				if msg.from_ in admin:
 					if msg.toType == 2:
@@ -2407,14 +2305,14 @@ def bot(op):
 							if _nametarget == g.displayName:
 								targets.append(g.mid)
 						if targets == []:
-							ki.sendText(msg.to,"Tidak Ada Boss Yuda")
+							ki.sendText(msg.to,"Tidak Ada Boss Bay")
 						else:
 							for target in targets:
 								try:
 									wait["teman"][target] = True
 									f=codecs.open('teman.json','w','utf-8')
 									json.dump(wait["teman"], f, sort_keys=True, indent=4,ensure_ascii=False)
-									ki.sendText(msg.to,"Done Boss yuda")
+									ki.sendText(msg.to,"Done Boss Bay")
 								except:
 									ki.sendText(msg.to,"Error")
             elif "Unmes @" in msg.text:
@@ -2431,17 +2329,16 @@ def bot(op):
 							if _nametarget == g.displayName:
 								targets.append(g.mid)
 						if targets == []:
-							ki.sendText(msg.to,"Tidak Ada Boss Yuda")
-							kk.sendText(msg.to,"Tidak Ada Boss Yuda")
+							ki.sendText(msg.to,"Tidak Ada Boss Bay")
 						else:
 							for target in targets:
 								try:
 									del wait["teman"][target]
 									f=codecs.open('teman.json','w','utf-8')
 									json.dump(wait["teman"], f, sort_keys=True, indent=4,ensure_ascii=False)
-									ki.sendText(msg.to,"Done Boss yuda")
+									ki.sendText(msg.to,"Done Boss Bay")
 								except:
-									ki.sendText(msg.to,"Done Boss yuda")
+									ki.sendText(msg.to,"Done Boss Bay")
 #-------------ListGroup-----------------
             elif msg.text in ["List group"]:
               if msg.from_ in admin:
@@ -2471,8 +2368,8 @@ def bot(op):
 							if _name in g.displayName:
 								targets.append(g.mid)
 						if targets == []:
-							ki.sendText(msg.to,"Tidak Ada Boss Yuda")
-							kk.sendText(msg.to,"Tidak Ada Boss Yuda")
+							ki.sendText(msg.to,"Tidak Ada Boss Bay")
+							kk.sendText(msg.to,"Tidak Ada Boss Bay")
 						else:
 							for target in targets:
 								try:
@@ -2480,29 +2377,21 @@ def bot(op):
 									f=codecs.open('st2__b.json','w','utf-8')
 									json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
 								except:
-									ki.sendText(msg.to,"Done Boss yuda")
+									ki.sendText(msg.to,"Done Boss Bay")
 #-----------------------------------------------
-            elif "Temanall" in msg.text:
+            elif "Teman all" in msg.text:
 				if msg.from_ in admin:
 					if msg.toType == 2:
 						print "[Teman]ok"
 						_name = msg.text.replace("Temanall","")
 						gs = cl.getGroup(msg.to)
-						gs = ki.getGroup(msg.to)
-						gs = kk.getGroup(msg.to)
-						gs = kc.getGroup(msg.to)
-						gs = ka.getGroup(msg.to)
-						gs = kb.getGroup(msg.to)
-						gs = kd.getGroup(msg.to)
-						gs = kf.getGroup(msg.to)
-						gs = kp.getGroup(msg.to)
 						cl.sendText(msg.to,"oke")
 						targets = []
 						for g in gs.members:
 							if _name in g.displayName:
 																targets.append(g.mid)
 						if targets == []:
-							ki.sendText(msg.to,"Tidak Ada Boss Yuda")
+							ki.sendText(msg.to,"Tidak Ada Boss Bay")
 						else:
 							for target in targets:
 								try:
@@ -2513,24 +2402,27 @@ def bot(op):
 									ki.sendText(msg.to,"Error")
 #----------------------------------------------------------------------------------------
             elif "Add all" in msg.text:
-                ap = cl.getGroups([msg.to])
-                semua = [contact.mid for contact in ap[0].members]
-                nya = ap[0].members
-                for a in nya:
-                    Mi_d = str(a.mid)
-                    cl.findAndAddContactsByMid(Mi_d)
+				if msg.from_ in admin:
+					ap = cl.getGroups([msg.to])
+					semua = [contact.mid for contact in ap[0].members]
+					nya = ap[0].members
+					for a in nya:
+						Mi_d = str(a.mid)
+						cl.findAndAddContactsByMid(Mi_d)
 #----------------------------------------------------------------------------------------
             elif "Add als" in msg.text:
-                n = cl.getGroupIdsJoined()
-                cl.getGroups(n)
-                mids = cl.getGroups(n).members
-                for a in mids:
-                    mi_d = str(a.mid)
-                    cl.findAndAddContactsByMids(mi_d)
-                    kf.findAndAddContactsByMid(mi_d)
-                    cl.sendText(msg.to,"sip selesai Add all")
+				if msg.from_ in admin:
+					n = cl.getGroupIdsJoined()
+					cl.getGroups(n)
+					mids = cl.getGroups(n).members
+					for a in mids:
+						mi_d = str(a.mid)
+						cl.findAndAddContactsByMids(mi_d)
+						kf.findAndAddContactsByMid(mi_d)
+						cl.sendText(msg.to,"sip selesai Add all")
 #-----------------------------------------------
             elif msg.text in ["Backup","backup"]:
+				if msg.from_ in admin:
                     contact = cl.getProfile()
                     backup = cl.getProfile()
                     backup.displayName = contact.displayName
@@ -2561,232 +2453,25 @@ def bot(op):
                         cl.sendText(msg.to, "Kelebihan batas :v")
 #-----------------------------------------------
             elif "name1:" in msg.text:
-              if msg.from_ in yuda:
+              if msg.from_ in Mirai:
                 string = msg.text.replace("name1:","")
                 if len(string.decode('utf-8')) <= 500:
                     profile = cl.getProfile()
                     profile.displayName = string
                     cl.updateProfile(profile)
 #-----------------------------------------------
-            elif "name2:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name2:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kc.getProfile()
-                    profile.displayName = string
-                    kc.updateProfile(profile)
-#-----------------------------------------------
-            elif "name3:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name3:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = ki.getProfile()
-                    profile.displayName = string
-                    ki.updateProfile(profile)
-#-----------------------------------------------
-            elif "name4:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name4:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kk.getProfile()
-                    profile.displayName = string
-                    kk.updateProfile(profile)
-#-----------------------------------------------
-            elif "name5:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name5:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = ka.getProfile()
-                    profile.displayName = string
-                    ka.updateProfile(profile)
-#-----------------------------------------------
-            elif "name6:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name6:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kb.getProfile()
-                    profile.displayName = string
-                    kb.updateProfile(profile)
-#-----------------------------------------------
-            elif "name7:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name7:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kd.getProfile()
-                    profile.displayName = string
-                    kd.updateProfile(profile)
-#-----------------------------------------------
-            elif "name8:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name8:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kf.getProfile()
-                    profile.displayName = string
-                    kf.updateProfile(profile)
-#-----------------------------------------------
-            elif "name9:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name9:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = km.getProfile()
-                    profile.displayName = string
-                    km.updateProfile(profile)
-#-----------------------------------------------
-            elif "name10:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name10:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kn.getProfile()
-                    profile.displayName = string
-                    kn.updateProfile(profile)
-#-----------------------------------------------
-            elif "name11:" in msg.text:
-              if msg.from_ in yuda1:
-                string = msg.text.replace("name11:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kp.getProfile()
-                    profile.displayName = string
-                    kp.updateProfile(profile)
-#-----------------------------------------------
-            elif "name12:" in msg.text:
-              if msg.from_ in yuda1:
-                string = msg.text.replace("name12:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kg.getProfile()
-                    profile.displayName = string
-                    kg.updateProfile(profile)
-#-----------------------------------------------
-            elif "name13:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("name13:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = ks.getProfile()
-                    profile.displayName = string
-                    ks.updateProfile(profile)
-#-----------------------------------------------
             elif "status1:" in msg.text:
-              if msg.from_ in yuda:
+              if msg.from_ in Mirai:
                 string = msg.text.replace("status1:","")
                 if len(string.decode('utf-8')) <= 500:
                     profile = cl.getProfile()
                     profile.statusMessage = string
                     cl.updateProfile(profile)
 #-----------------------------------------------
-            elif "status2:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("status2:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kc.getProfile()
-                    profile.statusMessage = string
-                    kc.updateProfile(profile)
-#-----------------------------------------------
-            elif "status3:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("status3:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = ki.getProfile()
-                    profile.statusMessage = string
-                    ki.updateProfile(profile)
-#-----------------------------------------------
-            elif "status4:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("status4:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kk.getProfile()
-                    profile.statusMessage = string
-                    kk.updateProfile(profile)
-#-----------------------------------------------
-            elif "status5:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("status5:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = ka.getProfile()
-                    profile.statusMessage = string
-                    ka.updateProfile(profile)
-#-----------------------------------------------
-            elif "status6:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("status6:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kb.getProfile()
-                    profile.statusMessage = string
-                    kb.updateProfile(profile)
-#-----------------------------------------------
-            elif "status7:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("status7:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kd.getProfile()
-                    profile.statusMessage = string
-                    kd.updateProfile(profile)
-#-----------------------------------------------
-            elif "status8:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("status8:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kf.getProfile()
-                    profile.statusMessage = string
-                    kf.updateProfile(profile)
-#-----------------------------------------------
-            elif "status9:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("status9:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = km.getProfile()
-                    profile.statusMessage = string
-                    km.updateProfile(profile)
-#-----------------------------------------------
-            elif "status10:" in msg.text:
-              if msg.from_ in yuda:
-                string = msg.text.replace("status10:","")
-                if len(string.decode('utf-8')) <= 500:
-                    profile = kn.getProfile()
-                    profile.statusMessage = string
-                    kn.updateProfile(profile)
-#-----------------------------------------------
             elif msg.text.lower() == 'respons':
                 profile = cl.getProfile()
                 text = profile.displayName + "􀜁􀅔􏿿"
                 cl.sendText(msg.to, text)
-                profile = kc.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                kc.sendText(msg.to, text)
-                profile = kk.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                kk.sendText(msg.to, text)
-                profile = ki.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                ki.sendText(msg.to, text)
-                profile = kb.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                kb.sendText(msg.to, text)
-                profile = kd.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                kd.sendText(msg.to, text)
-                profile = ka.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                ka.sendText(msg.to, text)
-                profile = kf.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                kf.sendText(msg.to, text)
-                profile = km.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                km.sendText(msg.to, text)
-                profile = kn.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                kn.sendText(msg.to, text)
-                profile = kp.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                kp.sendText(msg.to, text)
-                profile = kg.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                kg.sendText(msg.to, text)
-                profile = ks.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                ks.sendText(msg.to, text)
-                profile = kx.getProfile()
-                text = profile.displayName + "􀜁􀅔􏿿"
-                kx.sendText(msg.to, text)
 #-----------------------------------------------
             elif msg.text.lower() == 'status':
                 profile = cl.getProfile()
@@ -2795,36 +2480,6 @@ def bot(op):
                 profile = kc.getProfile()
                 text = profile.statusMessage + "􀜁􀅔􏿿"
                 kc.sendText(msg.to, text)
-                profile = kk.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                kk.sendText(msg.to, text)
-                profile = ki.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                ki.sendText(msg.to, text)
-                profile = kb.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                kb.sendText(msg.to, text)
-                profile = kd.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                kd.sendText(msg.to, text)
-                profile = ka.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                ka.sendText(msg.to, text)
-                profile = kf.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                kf.sendText(msg.to, text)
-                profile = km.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                km.sendText(msg.to, text)
-                profile = kn.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                kn.sendText(msg.to, text)
-                profile = kp.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                kp.sendText(msg.to, text)
-                profile = kg.getProfile()
-                text = profile.statusMessage + "􀜁􀅔􏿿"
-                kg.sendText(msg.to, text)
 #-----------------------------------------------
             elif "Steal @" in msg.text:
                 if msg.from_ in admin:
@@ -2896,57 +2551,30 @@ def bot(op):
                         cl.sendAudioWithURL(msg.to, mp3)
 #-----------------------------------------------
             elif msg.text in ["Test"]:
-					ki.sendText(msg.to,"Yuda disini!!")
-					kb.sendText(msg.to,"Siap disini tasya")
-#-----------------------------------------------
-            elif "Yuda say " in msg.text:
-					bctext = msg.text.replace("Yuda say ","")
-					ki.sendText(msg.to,(bctext))
-					kc.sendText(msg.to,(bctext))
-					cl.sendText(msg.to,(bctext))
-            elif "Tasya say " in msg.text:
-					bctext = msg.text.replace("Tasya say ","")
-					ka.sendText(msg.to,(bctext))
-					kb.sendText(msg.to,(bctext))
-					kd.sendText(msg.to,(bctext))
-            elif "Fikas say " in msg.text:
-					bctext = msg.text.replace("Fikas say ","")
-					kp.sendText(msg.to,(bctext))
-					kg.sendText(msg.to,(bctext))
-            elif "Cinta say " in msg.text:
-					bctext = msg.text.replace("Cinta say ","")
-					kn.sendText(msg.to,(bctext))
-					km.sendText(msg.to,(bctext))
-					kf.sendText(msg.to,(bctext))
+					ki.sendText(msg.to,"Mirai disini!!")
+					#kb.sendText(msg.to,"Siap disini tasya")
 #-----------------------------------------------
 
             elif msg.text in ["Admin","Pembuatid"]:
-				ki.sendText(msg.to,"line.me/ti/p/~yuda9d")
-				kb.sendText(msg.to,"line.me/ti/p/~naufal_opalminecraft")
+				ki.sendText(msg.to,"line.me/ti/p/~shunichiidesu")
 
 #-----------------------------------------------
 
             elif msg.text in ["#welcome"]:
-                ki.sendText(msg.to,"Selamat datang di yuda dan tasya Family Room")
-                kk.sendText(msg.to,"Jangan nakal ok! subscribe YouTube.com/YudaTheGoldMine dan https://m.youtube.com/channel/UCyZPQxy3TZk_8CdE9Q1bpoA")
+                ki.sendText(msg.to,"Selamat datang di Mirai Room")
                 
 #-----------------------------------------------
             elif msg.text in ["PING","Ping","ping"]:
 				ki.sendText(msg.to,"Some 􀜁􀅔Har Har􏿿")
-				kk.sendText(msg.to,"mabar mcpe yok")
+				kk.sendText(msg.to,"mabar Mobile Legend yok")
 				kc.sendText(msg.to,"Yuuk 􀜁􀅔Har Har􏿿")
 				kb.sendText(msg.to,"Pong Wkwkwkwk")
 #-----------------------------------------------
             elif msg.text in ["Responsename","respon","Respon"]:
-                ki.sendText(msg.to,"YudaBot Disini")
-                kk.sendText(msg.to,"YouTube.com/YudaTheGoldMine")
-                kc.sendText(msg.to,"idline yuda9d")
-                kb.sendText(msg.to,"tasya_ disini")
-                kb.sendText (msg.to,"https://m.youtube.com/channel/UCyZPQxy3TZk_8CdE9Q1bpoA")
-                kd.sendText(msg.to,"Halo__ semua")
+                ki.sendText(msg.to,"Mirai Bot Disini")
 #-----------------------------------------------
 
-            elif msg.text in ["kcpt","Kecepatan","kecepatan"]:
+            elif msg.text in ["speedbot","Speedbot","Speed"]:
 					start = time.time()
 					cl.sendText(msg.to, "Tunggu Ya Semua")
 					elapsed_time = time.time() - start
@@ -3090,9 +2718,9 @@ def autolike():
 				if hasil['result']['posts'][zx]['postInfo']['liked'] == False:
 					try:    
 						cl.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
-						cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like by @yuda")
+						cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like by @Mirai")
 						kk.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
-						kk.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like By line://ti/p/~yuda9d")
+						kk.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like By line://ti/p/~Mirai9d")
 						print "Like"
 					except:
 							pass
