@@ -10,32 +10,44 @@ import time,random,sys,json,codecs,threading,glob,re
 import urllib
 import timeit
 
-#cl = Bay.LINE()
-#cl.login(token="Eo6NhRJVwZWcYqwiACqa.5QKkZ1H0Sjn7VvF1U7LrUG.wVxqti7sJAjB+mlOGvokiLNyzUBbIAp0AYpJSxNeyhM=")
-#cl.loginResult()
+my = Bay.LINE()
+my.login(token="EoZ5JUae8NbLu1ZdBUma.5QKkZ1H0Sjn7VvF1U7LrUG.N+6o96rt/JNuL/gj0IoNHzk2rxKzQzU5+rOLF3DuQO0=")
+my.loginResult()
 
 cl = Bay.LINE()
 cl.login(token="Eozqzcop49UKP7jR7LRe.jF2jqoWaS/CziGXELFQk3G.a1y5XcYeF1rdtQG1EGZYyoTAysPQiIKFELpSerWF0ig=")
 cl.loginResult()
 
+kb = Bay.LINE()
+kb.login(token="EoRBBVCmTlrhYhwzpjv0.q1l8ETWVHkx/8dncS046Oa.+y4UjPsHwD2NqBbraPxaxarPr0D2lrh3/kE8cMFPjZI=")
+kb.loginResult()
+
+
 print "Login Success"
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-kf = kk = kc = ka = kb = kd = ki = km = kn = kp = kg = ks = kx = cl
+kf = kk = kc = ka = ki = kd = kb
+km = kn = kp = kg = ks = kx = cl
 
-helpMessage ="""  Sayaka Mirai BOT v.1(Test) 
+helpMessage ="""
+==============================
+        Sayaka Mirai BOT v.1.1(Test) 
+==============================
 ► Group Command ◄
 √ #welcome
-√ Mirai reinv [mid]
 √ Pantau --> menetapkan setpoint
 √ Sleding --> melihat sider
 √ bicara .... --> Vn google ID
 √ speak .... --> Vn google ENG
-√ Cekig
-√ Carig
-√ CariYT
-√ carilagu
+√ sayjp .... --> Vn google JP
+√ Berapa besar cinta ...
+√ Apakah ... --> Kerang ajaib
+√ Cekig ...
+√ Carig ...
+√ CariYT ...
+√ carilagu ...
+√ wiki ...
 √ Empty
 √ Nami Gc
 √ Ginfo
@@ -44,7 +56,10 @@ helpMessage ="""  Sayaka Mirai BOT v.1(Test) 
 √ My mid
 √ Me
 √ Speedbot
-√ S (mid) --> untuk mencari kontak lewat mid
+√ Kalender
+√ Zodiak
+
+► Admin Command ◄
 √ Gn ....
 √ Tagall
 √ Group Bc .....
@@ -84,11 +99,12 @@ Jmid = kp.getProfile().mid
 Kmid = kg.getProfile().mid
 Lmid = ks.getProfile().mid
 Xmid = kx.getProfile().mid
+mymid = my.getProfile().mid
 
 Bot1=[mid,Amid,Bmid,Cmid,Dmid,Emid,Fmid,Gmid,Hmid,Imid,Jmid,Kmid,Lmid,Xmid,"ue6a90acf5874b0937bbd57f5bbb951ba"]
 Bots=[mid,Amid,Bmid,Cmid,Dmid,Emid,Fmid,Gmid,Hmid,Imid,Jmid,Kmid,Lmid,Xmid,"ue6a90acf5874b0937bbd57f5bbb951ba"]
 admin=["ue6a90acf5874b0937bbd57f5bbb951ba"]
-Mirai=[mid]
+Owner=["ue6a90acf5874b0937bbd57f5bbb951ba"]
 Mirai1=[mid]
 Bots1=[Bots,admin]
 wait = {
@@ -101,6 +117,7 @@ wait = {
     'message':"Owner : line://ti/p/~shunichiidesu",
     'recommend':"jangan lupa add back ya:)",
     "lang":"JP",
+		"detectMention":True,
     "comment":"Owner : line://ti/p/~shunichiidesu",
     "commentOn":True,
     "commentBlack":{},
@@ -290,7 +307,7 @@ def bot(op):
                 group = random.choice(KAC).getGroup(op.param1)
                 cb = Message()
                 cb.to = op.param1
-                cb.text = random.choice(KAC).getContact(op.param2).displayName + " Member Baru\n\nSelamat Datang" + random.choice(KAC).getContact(op.param2).displayName + " di [" + group.name + "]\nInvite sapa saja! ok!"+ "\n\nOwner adalah ➡ " + group.creator.displayName
+                cb.text = "Selamat datang di " + group.name + ". Selamat berbelanja."
                 random.choice(KAC).sendMessage(cb)
 
         if op.type == 11:
@@ -2264,14 +2281,14 @@ def bot(op):
 							if _nametarget == g.displayName:
 								targets.append(g.mid)
 						if targets == []:
-							ki.sendText(msg.to,"Tidak Ada Boss Mirai")
+							ki.sendText(msg.to,"Tidak Ada Boss Bay")
 						else:
 							for target in targets:
 								try:
 									wait["blacklist"][target] = True
 									f=codecs.open('st2__b.json','w','utf-8')
 									json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-									ki.sendText(msg.to,"Done Boss Mirai")
+									ki.sendText(msg.to,"Done Boss Bay")
 								except:
 									ki.sendText(msg.to,"Error")
             elif "Unban @" in msg.text:
@@ -2288,17 +2305,17 @@ def bot(op):
 							if _nametarget == g.displayName:
 								targets.append(g.mid)
 						if targets == []:
-							ki.sendText(msg.to,"Tidak Ada Boss Mirai")
-							kk.sendText(msg.to,"Tidak Ada Boss Mirai")
+							ki.sendText(msg.to,"Tidak Ada Boss Bay")
+							kk.sendText(msg.to,"Tidak Ada Boss Bay")
 						else:
 							for target in targets:
 								try:
 									del wait["blacklist"][target]
 									f=codecs.open('st2__b.json','w','utf-8')
 									json.dump(wait["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-									ki.sendText(msg.to,"Done Boss Mirai")
+									ki.sendText(msg.to,"Done Boss Bay")
 								except:
-									ki.sendText(msg.to,"Done Boss Mirai")
+									ki.sendText(msg.to,"Done Boss Bay")
             elif "Mes @" in msg.text:
 				if msg.from_ in admin:
 					if msg.toType == 2:
@@ -2433,7 +2450,7 @@ def bot(op):
               if msg.from_ in admin:
                 text = msg.text.split(" ")
                 jmlh = int(text[2])
-                teks = msg.text.replace("Spam: ")+str(text[1])+" "+str(jmlh + " ","")
+                teks = msg.text.replace("Spam: "+str(text[1])+" "+str(jmlh)+ " ","")
                 tulisan = jmlh * (teks+"\n")
                  #@reno.a.w
                 if text[1] == "on":
@@ -2449,7 +2466,7 @@ def bot(op):
                         cl.sendText(msg.to, "Kelebihan batas :v")
 #-----------------------------------------------
             elif "name1:" in msg.text:
-              if msg.from_ in Mirai:
+              if msg.from_ in Owner:
                 string = msg.text.replace("name1:","")
                 if len(string.decode('utf-8')) <= 500:
                     profile = cl.getProfile()
@@ -2457,7 +2474,7 @@ def bot(op):
                     cl.updateProfile(profile)
 #-----------------------------------------------
             elif "status1:" in msg.text:
-              if msg.from_ in Mirai:
+              if msg.from_ in Owner:
                 string = msg.text.replace("status1:","")
                 if len(string.decode('utf-8')) <= 500:
                     profile = cl.getProfile()
@@ -2475,7 +2492,7 @@ def bot(op):
                 cl.sendText(msg.to, text)
                 profile = kc.getProfile()
                 text = profile.statusMessage + "􀜁􀅔?"
-                kc.sendText(msg.to, text)
+                kb.sendText(msg.to, text)
 #-----------------------------------------------
             elif "Steal @" in msg.text:
                 if msg.from_ in admin:
@@ -2531,8 +2548,6 @@ def bot(op):
                         hasil += '\nDurasi : ' + song[1]
                         hasil += '\nLink Download : ' + song[4]
                         cl.sendText(msg.to, hasil)
-                        cl.sendText(msg.to, "Please Wait for audio...")
-                        cl.sendAudioWithURL(msg.to, song[4])
 		except Exception as njer:
 		        cl.sendText(msg.to, str(njer))
 #--------------------------------------------------------
@@ -2548,7 +2563,7 @@ def bot(op):
 #-----------------------------------------------
             elif msg.text in ["Test"]:
 					ki.sendText(msg.to,"Mirai disini!!")
-					#kb.sendText(msg.to,"Siap disini tasya")
+					kb.sendText(msg.to,"Siap disini Aika")
 #-----------------------------------------------
 
             elif msg.text in ["Admin","Pembuatid"]:
@@ -2557,7 +2572,9 @@ def bot(op):
 #-----------------------------------------------
 
             elif msg.text in ["#welcome"]:
-                ki.sendText(msg.to,"Selamat datang di Mirai Room")
+                if msg.toType == 2:
+                    ginfo = cl.getGroup(msg.to)
+                ki.sendText(msg.to,"Selamat datang di " + str(ginfo.name))
                 
 #-----------------------------------------------
             elif msg.text in ["PING","Ping","ping"]:
@@ -2565,22 +2582,96 @@ def bot(op):
 				kk.sendText(msg.to,"mabar Mobile Legend yok")
 				kc.sendText(msg.to,"Yuuk 􀜁􀅔Har Har?")
 				kb.sendText(msg.to,"Pong Wkwkwkwk")
+#----------------------------------------------
+            elif "Berapa besar cinta " in msg.text:
+                tanya =  msg.text.replace("Berapa besar cinta","")
+                jawab = ("10%","20%","30%","40%","50%","60%","70%","80%","90%","100%")
+                jawaban = random.choice(jawab)
+                cl.sendText(msg.to,"Besar cinta " + tanya + " adalah " + jawaban)
 #-----------------------------------------------
+            elif msg.text in ["Kalender"]:
+	    	      wait2['setTime'][msg.to] = datetime.today().strftime('TANGGAL : %Y-%m-%d \nHARI : %A \nJAM : %H:%M:%S')
+	              cl.sendText(msg.to, "         KALENDER\n\n" + (wait2['setTime'][msg.to]))
+#-----------------------------------------------
+            elif 'wiki ' in msg.text.lower():
+              if msg.toType ==2:
+                  try:
+                      wiki = msg.text.lower().replace("wiki ","")
+                      wikipedia.set_lang("id")
+                      pesan="Title ("
+                      pesan+=wikipedia.page(wiki).title
+                      pesan+=")\n\n"
+                      pesan+=wikipedia.summary(wiki, sentences=1)
+                      pesan+="\n"
+                      pesan+=wikipedia.page(wiki).url
+                      cl.sendText(msg.to, pesan)
+                  except:
+                          try:
+                              pesan="Over Text Limit! Please Click link\n"
+                              pesan+=wikipedia.page(wiki).url
+                              cl.sendText(msg.to, pesan)
+                          except Exception as e:
+                              cl.sendText(msg.to, str(e))
+#-----------------------------------------------
+            elif "zodiak " in msg.text.lower():
+                tanggal = msg.text.lower().replace("zodiak ","")
+                r=requests.get('https://script.google.com/macros/exec?service=AKfycbw7gKzP-WYV2F5mc9RaR7yE3Ve1yN91Tjs91hp_jHSE02dSv9w&nama=ervan&tanggal='+tanggal)
+                data=r.text
+                data=json.loads(data)
+                lahir = data["data"]["lahir"]
+                usia = data["data"]["usia"]
+                ultah = data["data"]["ultah"]
+                zodiak = data["data"]["zodiak"]
+                cl.sendText(msg.to,"Tanggal Lahir: "+lahir+"\n\nUsia: "+usia+"\n\nUltah: "+ultah+"\n\nZodiak: "+zodiak)
+#======================Respon Tag===============
+            if "@"+my.getProfile().displayName in msg.text:
+                if wait["detectMention"] == True:
+                    tanya = msg.text.replace("@"+my.getProfile().displayName,"")
+                    jawab = (cl.getContact(msg.from_).displayName+" langsung PC aja jangan tag tag di group.")
+                    jawaban = (jawab)
+                    cl.sendText(msg.to,jawaban)
+                    cl.sendText(msg.to,"Nih kontak nya!")
+                    msg.contentType = 13
+                    msg.contentMetadata = {'mid': mymid}
+                    cl.sendMessage(msg)
+#-----------------------------------------------
+            elif msg.text in ["Tag on"]:
+             if msg.from_ in admin:
+                if wait["detectMention"] == True:
+                    if wait["lang"] == "JP":
+                        cl.sendText(msg.to,"Already on")
+                    else:
+                        cl.sendText(msg.to,"Tag On")
+                else:
+                    wait["detectMention"] = True
+                    if wait["lang"] == "JP":
+                        cl.sendText(msg.to,"Tag On")
+                    else:
+                        cl.sendText(msg.to,"already on")
+            elif msg.text in ["Tag off"]:
+             if msg.from_ in admin:
+                if wait["detectMention"] == False:
+                    if wait["lang"] == "JP":
+                        cl.sendText(msg.to,"Already off")
+                    else:
+                        cl.sendText(msg.to,"Tag Off")
+                else:
+                    wait["detectMention"] = False
+                    if wait["lang"] == "JP":
+                        cl.sendText(msg.to,"Tag Off")
+                    else:
+                        cl.sendText(msg.to,"Already off")
+#===============================================
             elif msg.text in ["Responsename","respon","Respon"]:
-                ki.sendText(msg.to,"Mirai Bot Disini")
+                cl.sendText(msg.to,"Mirai Bot Disini")
+                kb.sendText(msg.to,"Aika Bot Disini")
 #-----------------------------------------------
 
             elif msg.text in ["speedbot","Speedbot","Speed"]:
 					start = time.time()
-					cl.sendText(msg.to, "Tunggu Ya Semua")
+					cl.sendText(msg.to, "Please wait...")
 					elapsed_time = time.time() - start
 					cl.sendText(msg.to, "%s/Detik" % (elapsed_time))
-					elapsed_time = time.time() - start
-					ka.sendText(msg.to, "%s/Detik" % (elapsed_time))
-					elapsed_time = time.time() - start
-					kn.sendText(msg.to, "%s/Detik" % (elapsed_time))
-					elapsed_time = time.time() - start
-					kg.sendText(msg.to, "%s/Detik" % (elapsed_time))
 #------------------------------------------------------------------
             elif msg.text in ["Ban"]:
 				if msg.from_ in admin:
@@ -2714,9 +2805,9 @@ def autolike():
 				if hasil['result']['posts'][zx]['postInfo']['liked'] == False:
 					try:    
 						cl.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
-						cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like by @Mirai")
+						cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like by Bay")
 						kk.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
-						kk.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like By line://ti/p/~Mirai9d")
+						kk.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like By line://ti/p/~shunichiidesu")
 						print "Like"
 					except:
 							pass
