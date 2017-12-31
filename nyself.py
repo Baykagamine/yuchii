@@ -32,7 +32,7 @@ km = kn = kp = kg = ks = kx = cl
 
 helpMessage ="""
 ==============================
-        Sayaka Mirai BOT v.1.1(Test) 
+        Sayaka Mirai BOT v.1.3(Test) 
 ==============================
 ► Group Command ◄
 √ #welcome
@@ -117,7 +117,7 @@ wait = {
     'message':"Owner : line://ti/p/~shunichiidesu",
     'recommend':"jangan lupa add back ya:)",
     "lang":"JP",
-		"detectMention":True,
+		"detectMention":False,
     "comment":"Owner : line://ti/p/~shunichiidesu",
     "commentOn":True,
     "commentBlack":{},
@@ -140,11 +140,14 @@ wait2 = {
     'readPoint':{},
     'readMember':{},
     'setTime':{},
-    'ROM':{}
+    'ROM':{},
+    'timeRead':{}
     }
 
 setTime = {}
 setTime = wait2['setTime']
+timeRead = {}
+timeRead = wait2['timeRead']
 
 def sendMessage(to, text, contentMetadata={}, contentType=0):
     mes = Message()
@@ -194,21 +197,40 @@ def sendImage2(self, to_, path):
       return True
 
 def NOTIFIED_READ_MESSAGE(op):
-        if op.type == 55:
+    try:
+        if op.param1 in wait2['readPoint']:
+            Name = cl.getContact(op.param2).displayName
+            if Name in wait2['readMember'][op.param1]:
+                pass
+            else:
+                wait2['readMember'][op.param1] += "\n・" + Name
+                wait2['ROM'][op.param1][op.param2] = "\n・" + Name
+        else:
+            pass
+    except:
+        pass
+
+def RECEIVE_MESSAGE(op):
+    msg = op.message
+    try:
+        if msg.contentType == 0:
             try:
-                if op.param1 in wait2['readPoint']:
-                    Name = cl.getContact(op.param2).displayName
-                    if Name in wait2['readMember'][op.param1]:
-                        pass
-                    else:
-                        wait2['readMember'][op.param1] += "\nツ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77771ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777" + Name
-                        wait2['ROM'][op.param1][op.param2] = "ツ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77771ￄ1�71ￄ1�771ￄ1�71ￄ1�7771ￄ1�71ￄ1�771ￄ1�71ￄ1�77777" + Name
+                if msg.to in wait['readPoint']:
+                    if msg.from_ in wait["ROM"][msg.to]:
+                        del wait["ROM"][msg.to][msg.from_]
                 else:
                     pass
             except:
                 pass
-
-
+        else:
+            pass
+    except KeyboardInterrupt:
+	       sys.exit(0)
+    except Exception as error:
+        print error
+        print ("\n\nRECEIVE_MESSAGE\n\n")
+        return
+		
 def bot(op):
     try:
         if op.type == 0:
@@ -220,6 +242,7 @@ def bot(op):
                     pass
                 else:
                     cl.sendText(op.param1,str(wait["message"]))
+
         if op.type == 8:
             if wait["autoAdd"] == True:
                 cl.findAndAddContactsByMid(op.param1)
@@ -310,6 +333,15 @@ def bot(op):
                 cb.text = "Selamat datang di " + group.name + ". Selamat berbelanja."
                 random.choice(KAC).sendMessage(cb)
 
+        if op.type == 15:
+                group = cl.getGroup(op.param1)
+                cb = Message()
+                cb.to = op.param1
+                cb.text = "Terima Kasih telah berbelanja di " + group.name
+                cl.sendMessage(cb)
+                print op.param2 + "has left the group"
+
+	
         if op.type == 11:
             if op.param2 not in Bot1:
                     X = cl.getGroup(op.param1)
@@ -1826,31 +1858,31 @@ def bot(op):
 					else:
 						cl.sendText(msg.to,"Please turn on the name clock")
 
-            elif msg.text == "Pantau":
-                    cl.sendText(msg.to, "Sudah saya pantau.")
+            elif msg.text.lower() == 'pantau':
+                    cl.sendText(msg.to, "Masih aku pantau ini.")
                     try:
                         del wait2['readPoint'][msg.to]
                         del wait2['readMember'][msg.to]
                     except:
-                        pass
+                           pass
+                    now2 = datetime.now()
                     wait2['readPoint'][msg.to] = msg.id
                     wait2['readMember'][msg.to] = ""
+                    wait2['setTime'][msg.to] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     wait2['ROM'][msg.to] = {}
                     print wait2
-                    
-            elif msg.text == "Sleding":
-                    if msg.to in wait2['readPoint']:
-                        if wait2["ROM"][msg.to].items() == []:
-                            chiya = ""
-                        else:
-                            chiya = ""
-                            for rom in wait2["ROM"][msg.to].items():
-                                print rom
-                                chiya += rom[1] + "\n"
-
-                        cl.sendText(msg.to, "Mamam nih sleding:\n%s\nDate and time:\n[%s]"  % (chiya,setTime[msg.to]))
-                    else:
-                        cl.sendText(msg.to, "Pantau dulu pe'a, jangan asal sleding aja.")
+            elif msg.text.lower() == 'sleding':
+	                    if msg.to in wait2['readPoint']:
+	                        if wait2["ROM"][msg.to].items() == []:
+	                            chiya = ""
+	                        else:
+	                            chiya = ""
+	                            for rom in wait2["ROM"][msg.to].items():
+	                                print rom
+	                                chiya += rom[1] + "\n"
+	                        cl.sendText(msg.to, "Ini nih yang kena sleding:\n%s\n==============\nDate and time:\n[%s]"  % (chiya,setTime[msg.to]))
+	                    else:
+	                        cl.sendText(msg.to, "Pantau dulu lah pe'a, Jangan asal Sleding aja.")
 #-----------------------------------------------
 
             elif msg.text in ["Masuk","Bot masuk,Semua Masuk"]:
@@ -2583,6 +2615,71 @@ def bot(op):
 				kc.sendText(msg.to,"Yuuk 􀜁􀅔Har Har?")
 				kb.sendText(msg.to,"Pong Wkwkwkwk")
 #----------------------------------------------
+            elif "Staff add @" in msg.text:
+                if msg.from_ in admin:
+                    print "[Command]Staff add executing"
+                    _name = msg.text.replace("Staff add @","")
+                    _nametarget = _name.rstrip('  ')
+                    gs = cl.getGroup(msg.to)
+                    gs = ki.getGroup(msg.to)
+                    gs = kk.getGroup(msg.to)
+                    gs = kc.getGroup(msg.to)
+                    targets = []
+                    for g in gs.members:
+                        if _nametarget == g.displayName:
+                            targets.append(g.mid)
+                    if targets == []:
+                        ki.sendText(msg.to,"Contact not found")
+                    else:
+                        for target in targets:
+                            try:
+                                admin.append(target)
+                                cl.sendText(msg.to,"Staff added")
+                            except:
+                                pass
+                    print "[Command]Staff add executed"
+                else:
+                    cl.sendText(msg.to,"Command denied.")
+                    cl.sendText(msg.to,"Admin permission required.")
+
+            elif "Staff remove @" in msg.text:
+                if msg.from_ in admin:
+                    print "[Command]Staff remove executing"
+                    _name = msg.text.replace("Staff remove @","")
+                    _nametarget = _name.rstrip('  ')
+                    gs = cl.getGroup(msg.to)
+                    gs = ki.getGroup(msg.to)
+                    gs = kk.getGroup(msg.to)
+                    gs = kc.getGroup(msg.to)
+                    targets = []
+                    for g in gs.members:
+                        if _nametarget == g.displayName:
+                            targets.append(g.mid)
+                    if targets == []:
+                        ki.sendText(msg.to,"Contact not found")
+                    else:
+                        for target in targets:
+                            try:
+                                admin.remove(target)
+                                cl.sendText(msg.to,"Staff deleted")
+                            except:
+                                pass
+                    print "[Command]Staff remove executed"
+                else:
+                    cl.sendText(msg.to,"Command denied.")
+                    cl.sendText(msg.to,"Admin permission required.")
+
+            elif msg.text in ["Stafflist","stafflist"]:
+                if admin == []:
+                    cl.sendText(msg.to,"The stafflist is empty")
+                else:
+                    cl.sendText(msg.to,"please wait...")
+                    mc = ""
+                    for mi_d in admin:
+                        mc += "\n- " + cl.getContact(mi_d).displayName
+                    cl.sendText(msg.to, "Staff :\n" + mc)
+                    print "[Command]Stafflist executed"
+#----------------------------------------------
             elif "Berapa besar cinta " in msg.text:
                 tanya =  msg.text.replace("Berapa besar cinta","")
                 jawab = ("10%","20%","30%","40%","50%","60%","70%","80%","90%","100%")
@@ -2784,6 +2881,21 @@ def bot(op):
 							cl.sendText(msg.to,str(e))
 						except:
 							pass
+						
+        if op.type == 55:
+            try:
+				if op.param1 in wait2['readPoint']:
+					Name = cl.getContact(op.param2).displayName
+					if Name in wait2['readMember'][op.param1]:
+						pass
+					else:
+						wait2['readMember'][op.param1] += "\n- " + Name
+						wait2['ROM'][op.param1][op.param2] = "- " + Name
+				else:
+					cl.sendText
+            except:
+                pass
+
         if op.type == 59:
             print op
 
@@ -2806,8 +2918,8 @@ def autolike():
 					try:    
 						cl.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
 						cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like by Bay")
-						kk.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
-						kk.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like By line://ti/p/~shunichiidesu")
+						kb.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+						kb.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto Like By line://ti/p/~shunichiidesu")
 						print "Like"
 					except:
 							pass
