@@ -10,25 +10,17 @@ import time,random,sys,json,codecs,threading,glob,re
 import urllib
 import timeit
 
-my = Bay.LINE()
-my.login(token="EoZ5JUae8NbLu1ZdBUma.5QKkZ1H0Sjn7VvF1U7LrUG.N+6o96rt/JNuL/gj0IoNHzk2rxKzQzU5+rOLF3DuQO0=")
-my.loginResult()
 
 cl = Bay.LINE()
 cl.login(token="Eozqzcop49UKP7jR7LRe.jF2jqoWaS/CziGXELFQk3G.a1y5XcYeF1rdtQG1EGZYyoTAysPQiIKFELpSerWF0ig=")
 cl.loginResult()
-
-kb = Bay.LINE()
-kb.login(token="EoRBBVCmTlrhYhwzpjv0.q1l8ETWVHkx/8dncS046Oa.+y4UjPsHwD2NqBbraPxaxarPr0D2lrh3/kE8cMFPjZI=")
-kb.loginResult()
 
 
 print "Login Success"
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-kf = kk = kc = ka = ki = kd = kb
-km = kn = kp = kg = ks = kx = cl
+kf = kk = kc = ka = ki = kd = kb = km = kn = kp = kg = ks = kx = cl
 
 helpMessage ="""
 ==============================
@@ -99,7 +91,6 @@ Jmid = kp.getProfile().mid
 Kmid = kg.getProfile().mid
 Lmid = ks.getProfile().mid
 Xmid = kx.getProfile().mid
-mymid = my.getProfile().mid
 
 Bot1=[mid,Amid,Bmid,Cmid,Dmid,Emid,Fmid,Gmid,Hmid,Imid,Jmid,Kmid,Lmid,Xmid,"ue6a90acf5874b0937bbd57f5bbb951ba"]
 Bots=[mid,Amid,Bmid,Cmid,Dmid,Emid,Fmid,Gmid,Hmid,Imid,Jmid,Kmid,Lmid,Xmid,"ue6a90acf5874b0937bbd57f5bbb951ba"]
